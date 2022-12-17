@@ -16,9 +16,9 @@ abstract class User{
         //proporty를 private으로 만든다면, 클래스 상속했더라도 접근할 수 없음
         //이클래스는 추상 클래스여서 인스턴스화 할 수 없음
         //다른 자식클래스에서 사용되길 바라면 private 말고 protect 사용할 것 
-        private firstName : string,
-        private lastName: string,
-        public nickname: string,
+        protected firstName : string,
+        protected lastName: string,
+        protected  nickname: string,
     ){}
     // 추상클래스 메소드, 메소드의 call signature만 적어
     abstract getNickName():void
@@ -28,6 +28,10 @@ abstract class User{
 }
 //player가 user을 상속함
 class Player extends User{
+    getNickName(){
+        //nickName을 private시 접근 안됐는데, protect시 접근가능해짐 (상속받은 클래스 내에서만 )
+        console.log(this.nickname)
+    }
 }
 
 const nico = new Player("nico", "las", "니꼬")
