@@ -29,9 +29,14 @@ class Dict {
         }
     }
     //딕셔너리의 단어를 모두 보여줌
-    showAll(){
-        let dictArr = Object.keys(this.words)
-       return dictArr.map((Alldict)=>{return console.log(Alldict)})
+    // showAll(){
+    //     let dictArr = Object.keys(this.words)
+    //    return dictArr.map((Alldict)=>{return console.log(Alldict)})
+    // }
+
+    showAll() {
+        Object.keys(this.words).forEach((term)=>
+        console.log(`${term}:${this.words[term]}`))
     }
     //단어들의 총 수 
     count(){
