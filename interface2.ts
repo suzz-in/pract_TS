@@ -15,6 +15,7 @@ interface Human {
 //왜 추상클래스를 만드는가?
 // 표준화된 property와 메소드를 갖도록 해주는 청사진을 만들기 위해 추상클래스를 사용함
 //인터페이스는 가벼움. 인터페이스는 컴파일하면 js로 바뀌지 않고 사라짐
+//추상클래스는 자바스크립트에서 일반적인 클래스로 바뀜
 class Player implements User, Human {
     //implements 사용하면 코드가 가벼워짐 - 컴파일 안되니까.. js는 없는 거라서
     constructor(
@@ -43,4 +44,4 @@ makeUser({
     lastName: "las",
     fullName: ()=> "xx",
     sayHi: (name) => "string"
-})
+}
