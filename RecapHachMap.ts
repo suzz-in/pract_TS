@@ -19,6 +19,11 @@ class Dict {
     def(term:string){
         return this.words[term]
     }
+
+    //static은 자바스크립트
+    static hello() {
+        return "hello"
+    }
 }
 
 class Word {
