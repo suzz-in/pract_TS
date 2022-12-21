@@ -26,6 +26,7 @@ class LocalStroage<T> {
 
 const stringStorage = new LocalStroage<string>();
 stringStorage.get("ket") 
+stringStorage.set("hellow", "how r u")
 
 const booleanStorage = new LocalStroage<boolean>();
 booleanStorage.get("boolean")
