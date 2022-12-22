@@ -1,42 +1,101 @@
-interface LocalStorageAPI<T> {
-    [key: string] : T
-}
-
-class LocalStorage<T> {
-    private storage : LocalStorageAPI<T> = {}
-    setItem(key:string, value: T){
-        if(!this.storage.hasOwnProperty(key)){
-             this.storage[key] = value;
-        }
+// LocalStorage Interface
+abstract class LocalStorage<T> {
+    protected items: Items<T>;
+    constructor() {
+      this.items = {};
     }
-    getItem(key:string):T{
-        return this.storage[key]
+    abstract length(): number;
+    abstract key(index: number): T;
+    abstract getItem(key: string): T;
+    abstract setItem(key: string, value: T): void;
+    abstract removeItem(key: string): void;
+    abstract clear(): void;
+  }
+  interface Items<T> {
+    [key: string]: T;
+  }
+  class SuperStorage extends LocalStorage<string> {
+    constructor() {
+      super();
     }
-    clearItem(key:string){
-        delete this.storage[key]
+    public key(index: number) {
+      return Object.keys(this.items)[index];
     }
-    clear(){
-        this.storage = {}
+    public length() {
+      return Object.keys(this.items).length;
     }
-}
-interface GeolocationAPI {
-    successFn(location:string):{}
-    error(location:string)?:{}
-    options()?:{}
-}
-//overloading 오버로딩 : 매개변수의 개수는 동일하게, type은 다르게 정의해서 사용하는 방법(ts는 함수명과 매개변수의 개수가 같아야함)
-//매개변수의 type만 다르고 동작은 동일할 떄 코드를 줄이고자 사용
-class GEOlocation{
-    private location : GeolocationAPI
-    getCurrentPosition(successFn(location:string):{}){
+    public getItem(key: string) {
+      return this.items[key];
     }
-    watchPostition(){}
-    clearWatch()
-}
-// geolocation.getCurrentPosition(successFn);//현재위치 파악, 
-// geolocation.getCurrentPosition(successFn, errorFn);
-// geolocation.getCurrentPosition(successFn, errorFn, optionsObj);
-// geolocation.watchPosition(success);
-// geolocation.watchPosition(success, error);
-// geolocation.watchPosition(success, error, options);
-// geolocation.clearWatch(id);
+    public setItem(key: string, value: string) {
+      this.items[key] = value;
+    }
+    public removeItem(key: string) {
+      delete this.items[key];
+    }
+    public clear() {
+      this.items = {};
+    }
+  }
+  
+  // Geolocation Interface
+  type GeolocationCoords = {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    accuracy: number;
+    altitudeAccuracy: number;
+    heading: number;
+    speed: number;
+  };
+  type Position = {
+    coords: GeolocationCoords;
+  };
+  type GeoError = {
+    code: number;
+    message: string;
+  };
+  type SuccessFunction = (position: Position) => void;
+  type ErrorFunction = (error: GeoError) => void;
+  type GeoOptions = {
+    maximumAge: number;
+    timeout: number;
+    enableHighAccuracy: boolean;
+  };
+  
+  type GetCurrentPosition = {
+    (success: SuccessFunction): void;
+    (success: SuccessFunction, error: ErrorFunction): void;
+    (success: SuccessFunction, error: ErrorFunction, options: GeoOptions): void;
+  };
+  
+  type WatchCurrentPosition = {
+    (success: SuccessFunction): number;
+    (success: SuccessFunction, error: ErrorFunction): number;
+    (success: SuccessFunction, error: ErrorFunction, options: GeoOptions): number;
+  };
+  
+  interface GeolocationAPI {
+    getCurrentPosition: GetCurrentPosition;
+    watchPosition: WatchCurrentPosition;
+    clearWatch: (id: number) => void;
+  }
+  
+  class Geolocator implements GeolocationAPI {
+    getCurrentPosition: GetCurrentPosition = (
+      success: SuccessFunction,
+      error?: ErrorFunction,
+      options?: GeoOptions
+    ) => {
+      return; // Implementation goes here :)
+    };
+    watchPosition: WatchCurrentPosition = (
+      success: SuccessFunction,
+      error?: ErrorFunction,
+      options?: GeoOptions
+    ) => {
+      return 1; // Implementation goes here :)
+    };
+    clearWatch = (id: number) => {};
+  }
+  
