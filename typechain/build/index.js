@@ -1,5 +1,7 @@
 class Block {
-    constructor(private data: string){}
+    constructor(data) {
+        this.data = data;
+    }
     static hello() {
         return "hi";
     }
