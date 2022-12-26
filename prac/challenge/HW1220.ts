@@ -1,6 +1,8 @@
 // LocalStorage Interface
 abstract class LocalStorage<T> {
+  //추상클래스
     protected items: Items<T>;
+    //추상클래스에서는 private 사용 불가하기 때문에, protected
     constructor() {
       this.items = {};
     }
